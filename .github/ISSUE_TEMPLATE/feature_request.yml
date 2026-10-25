@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest a new tool or an improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What question can't you answer today?
+      description: Describe it from the student's point of view, e.g. "I want to know which lectures I haven't watched yet."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: A new tool, a new parameter, or extra fields on an existing tool. Link the relevant Canvas API endpoint if you know it.
+  - type: checkboxes
+    id: read-only
+    attributes:
+      label: Read-only
+      options:
+        - label: This feature only needs to read data from Canvas
+          required: true

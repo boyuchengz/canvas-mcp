@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/boyuchengz/canvas-mcp/security/advisories/new
+    about: Please report security issues privately.
+  - name: Canvas API documentation
+    url: https://canvas.instructure.com/doc/api/
+    about: Reference for what data Canvas exposes to students.

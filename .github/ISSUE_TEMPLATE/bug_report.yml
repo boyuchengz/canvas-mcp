@@ -1,0 +1,57 @@
+name: Bug report
+description: Something isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **Remove tokens, your connector URL, names and course IDs** from anything you paste below.
+        Security issues should be reported privately; see SECURITY.md.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you ask, which tool ran, and what did it return?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Tool name
+      placeholder: get_upcoming
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: The error text returned to the client, or server logs.
+      render: text
+  - type: dropdown
+    id: client
+    attributes:
+      label: Client
+      options:
+        - Claude (web / desktop / mobile)
+        - Claude Code
+        - ChatGPT
+        - MCP Inspector
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: hosting
+    attributes:
+      label: Hosting platform
+      placeholder: Railway / Render / Fly.io / local
+  - type: input
+    id: version
+    attributes:
+      label: canvas-mcp version and Node.js version
+      placeholder: 1.2.0, Node 22.11
+    validations:
+      required: true
