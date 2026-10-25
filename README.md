@@ -33,12 +33,12 @@ Every one of the 26 tools issues `GET` requests only. The server cannot submit, 
 
 ## Features
 
-- **Strictly read-only.** No write endpoints are wrapped, and reads that Canvas would normally treat as "viewed" (inbox threads, discussions) are made without side effects.
-- **Built for students.** Tools answer the questions students actually ask: deadlines across all courses, missing work, grade weights, feedback, syllabus policies.
-- **Compact output.** Canvas HTML is converted to plain text and responses are trimmed to the fields a model needs, which keeps token usage low.
-- **Remote by design.** Speaks MCP over Streamable HTTP, so it works with web and mobile clients, not just desktop apps.
-- **Stateless.** Each request gets a fresh server instance. Nothing is cached or stored; scale to zero without losing anything.
-- **Small.** Three runtime dependencies, no build step, no database.
+- Every tool is read-only. No write endpoints are wrapped, and inbox threads and discussions are fetched without marking them as read.
+- The tools are built around the questions students actually ask: deadlines across all courses, missing work, grade weights, feedback and syllabus policies.
+- Output is compact. Canvas HTML becomes plain text, and responses keep only the fields a model needs.
+- It runs remotely over Streamable HTTP, so it works in web and mobile clients, not only desktop apps.
+- It's stateless. Each request gets a fresh server instance, and nothing is cached or stored.
+- Three runtime dependencies, no build step, no database.
 
 ## Tools
 
@@ -144,10 +144,10 @@ The server validates all variables at startup and exits with a clear message if 
 
 ## Security
 
-- **Read-only by construction.** The Canvas client only exposes `GET` helpers. There is no code path that writes to Canvas.
-- **Secret in the path.** Requests without the correct secret receive the same `404` as any unknown URL, so the endpoint isn't discoverable. The comparison is constant-time.
-- **Token isolation.** The Canvas token is sent only to `CANVAS_BASE_URL`. Pagination links pointing to any other host are ignored, and file downloads use Canvas's pre-signed URLs without the token.
-- **No storage.** Nothing is logged, cached or persisted apart from error messages.
+- The Canvas client only exposes `GET` helpers, so there is no code path that writes to Canvas.
+- Requests without the correct secret get the same `404` as any unknown URL, and the secret is compared in constant time.
+- The Canvas token is only sent to `CANVAS_BASE_URL`. Pagination links to any other host are ignored, and file downloads use Canvas's pre-signed URLs without the token.
+- Nothing is cached or stored, and only errors are logged.
 
 Treat the connector URL like a password: anyone who has it can read your Canvas data. If it leaks, change `MCP_SECRET` and redeploy. If your Canvas token leaks, delete it under **Approved Integrations**.
 
@@ -155,10 +155,10 @@ See [SECURITY.md](SECURITY.md) for how to report a vulnerability.
 
 ## Limitations
 
-- **One user per deployment.** The server acts as whoever owns the token. Run a separate instance for each person.
-- **PDF, slides and Office files are not parsed.** `get_file` returns a temporary download link for them instead.
-- **New Quizzes** appear in `list_assignments`, not `list_quizzes`. Quiz questions are never exposed to students by the Canvas API.
-- **Large lists are capped** at 500 items (5 pages of 100) per call, and long text at 20,000 characters.
+- Each deployment serves one user, since the server acts as whoever owns the token. Run a separate instance for each person.
+- PDFs, slides and Office files aren't parsed. `get_file` returns a temporary download link for them instead.
+- New Quizzes appear in `list_assignments`, not `list_quizzes`, and the Canvas API never exposes quiz questions to students.
+- Lists are capped at 500 items (5 pages of 100) per call, and long text at 20,000 characters.
 - `get_calendar_events` without a `course_id` covers at most 10 courses, which is a Canvas API limit.
 
 ## Development

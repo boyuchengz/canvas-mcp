@@ -49,7 +49,3 @@ The `all 26 tools are registered and marked read-only` test counts tools; update
 ## Reporting bugs
 
 Open an issue using the bug report template. Include your Node.js version, hosting platform, the tool name and the error text returned to the client. For security problems, follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
-
-## Code of conduct
-
-This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). By participating you agree to uphold it.

@@ -1,6 +1,6 @@
 # Security Policy
 
-canvas-mcp handles a Canvas access token that can read a student's grades, messages and coursework, so security reports are taken seriously.
+canvas-mcp holds a Canvas access token that can read a student's grades, messages and coursework, so please report security problems privately.
 
 ## Supported versions
 
@@ -8,8 +8,8 @@ Only the latest release on `main` receives fixes.
 
 | Version | Supported |
 | --- | --- |
-| 1.2.x | ✅ |
-| < 1.2 | ❌ |
+| 1.2.x | Yes |
+| < 1.2 | No |
 
 ## Reporting a vulnerability
 
@@ -18,7 +18,7 @@ Only the latest release on `main` receives fixes.
 1. Go to the repository's **Security** tab.
 2. Click **Report a vulnerability**.
 
-Include what you found, how to reproduce it, and the impact you expect. You can expect an acknowledgement within 72 hours and a status update within 7 days. Once a fix is released you will be credited in the changelog unless you prefer otherwise.
+Include what you found, how to reproduce it, and the impact you expect. Once a fix is released you will be credited in the changelog unless you prefer otherwise.
 
 ## Scope
 
