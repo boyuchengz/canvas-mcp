@@ -206,3 +206,4 @@ Bug reports, feature ideas and pull requests are welcome. Please read [CONTRIBUT
 [MIT](LICENSE) © Boyucheng Zhang
 
 This project is not affiliated with or endorsed by Instructure, Inc. Canvas is a trademark of Instructure, Inc.
+
