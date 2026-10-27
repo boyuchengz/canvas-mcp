@@ -10,6 +10,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `Dockerfile` and `.dockerignore` for container hosts; the ignore file keeps `.env`, `.dev.vars` and `node_modules` out of the build context.
 - Gagarin Cloud deployment guide under "Other hosting options".
 
+### Changed
+
+- Railway now builds from the `Dockerfile`, since it always prefers a root `Dockerfile` over its default builder. `railway.json` sets `builder` to `DOCKERFILE` so this is explicit. Existing Railway deployments rebuild on Node.js 22 Alpine on their next deploy; no variables change. New `fly launch` runs also pick up the `Dockerfile`.
+
 ## [1.2.0] - 2026-10-25
 
 First public release.
