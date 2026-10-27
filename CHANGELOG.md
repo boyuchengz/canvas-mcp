@@ -5,6 +5,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Added
+
+- `Dockerfile` and `.dockerignore` for container hosts; the ignore file keeps `.env`, `.dev.vars` and `node_modules` out of the build context.
+- Gagarin Cloud deployment guide under "Other hosting options".
+
 ## [1.2.0] - 2026-10-25
 
 First public release.
