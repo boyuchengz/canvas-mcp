@@ -13,7 +13,7 @@ The server needs three environment variables (see [Configuration](../README.md#c
 
 ## Railway
 
-The repository includes a [`railway.json`](../railway.json) that sets the start command, health check and restart policy.
+Railway builds the repository's [`Dockerfile`](../Dockerfile). The included [`railway.json`](../railway.json) sets the builder, start command, health check and restart policy.
 
 **From the CLI**
 
@@ -38,7 +38,7 @@ Then for either method:
 ## Render
 
 1. **New → Web Service**, connect your fork.
-2. Build command `npm ci`, start command `npm start`.
+2. Language **Node** (Render may preselect Docker because of the `Dockerfile`; either works), build command `npm ci`, start command `npm start`.
 3. Add the environment variables.
 4. Set the health check path to `/healthz`.
 
@@ -47,14 +47,14 @@ Free instances sleep when idle; the first request after a pause can take several
 ## Fly.io
 
 ```bash
-fly launch --no-deploy      # detects Node.js, generates fly.toml
+fly launch --no-deploy      # detects the Dockerfile, generates fly.toml
 fly secrets set CANVAS_BASE_URL=https://canvas.example.edu \
                 CANVAS_API_TOKEN=... \
                 MCP_SECRET=...
 fly deploy
 ```
 
-Make sure `internal_port` in `fly.toml` matches the port the app listens on (Fly sets `PORT` for you), and add an HTTP check against `/healthz` if you like.
+Make sure `internal_port` in `fly.toml` is `8080`, the port the `Dockerfile` listens on, and add an HTTP check against `/healthz` if you like.
 
 ## Other hosting options
 
