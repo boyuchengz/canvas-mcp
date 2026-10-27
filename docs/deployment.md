@@ -56,6 +56,35 @@ fly deploy
 
 Make sure `internal_port` in `fly.toml` matches the port the app listens on (Fly sets `PORT` for you), and add an HTTP check against `/healthz` if you like.
 
+## Other hosting options
+
+Any host that runs a container image works too. The repository's [`Dockerfile`](../Dockerfile) builds the server on Node.js 22 and listens on `PORT`, defaulting to 8080.
+
+### Gagarin Cloud
+
+[Gagarin Cloud](https://gagarin.cloud) builds the `Dockerfile` with its `gg` CLI and gives the service an HTTPS address. There is no free tier: new accounts get $5 of credit, an always-on `S` instance (the smallest size, enough for canvas-mcp) costs about $10 a month billed per minute, and the minimum top-up is $20. This entry was contributed by the people who build Gagarin ([#4](https://github.com/boyuchengz/canvas-mcp/issues/4)).
+
+Install `gg` (`curl -fsSL https://gagarin.cloud/install.sh | sh`), run `gg login`, then from a clone of this repository:
+
+```bash
+gg init canvas-mcp
+
+# Secrets live in resources and reach the server prefixed with the resource name:
+# `canvas` provides CANVAS_BASE_URL and CANVAS_API_TOKEN, `mcp` provides MCP_SECRET.
+printf 'BASE_URL=https://canvas.example.edu\nAPI_TOKEN=<your-canvas-token>\n' > .env.canvas
+node -e "console.log('SECRET=' + require('crypto').randomBytes(24).toString('hex'))" > .env.mcp
+gg resource add canvas-mcp/canvas external --env-file .env.canvas
+gg resource add canvas-mcp/mcp external --env-file .env.mcp
+
+gg ship canvas-mcp/server:8080 --deps canvas --deps mcp   # build the Dockerfile and run it
+gg domain add canvas-mcp/server                            # prints https://server-<id>.apps.gagarin.cloud
+gg status canvas-mcp                                       # shows when it is running
+```
+
+`.env.canvas` and `.env.mcp` are covered by `.gitignore` and `.dockerignore`; delete them once you've noted the secret. Your connector URL is `https://server-<id>.apps.gagarin.cloud/<MCP_SECRET>/mcp`.
+
+To ship a new version, pull and repeat the `gg ship` line. To rotate a credential, `gg resource rotate canvas-mcp/mcp --set SECRET=<new-secret>` (or `canvas-mcp/canvas --set API_TOKEN=<new-token>`) restarts the server with the new value. `gg logs canvas-mcp/server` shows the startup line and any configuration errors.
+
 ## Your own server
 
 ```bash

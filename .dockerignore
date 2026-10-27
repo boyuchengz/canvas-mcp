@@ -1,0 +1,9 @@
+# Keep credentials and local state out of the build context.
+.env
+.env.*
+.dev.vars
+node_modules/
+.git/
+.railway/
+coverage/
+*.log
